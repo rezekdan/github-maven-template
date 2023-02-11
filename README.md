@@ -2,7 +2,11 @@
 Template for maven projects on github
 
 ## about
-ci/cd template using github actions/workflows for java/maven projects
+ci/cd template using github actions/workflows for java/maven projects. this template uses a very basic spring app generated via [start.spring.io](http://start.spring.io)
+
+## prerequisites
+* java 17
+* github account/repo
 
 ## design principles
 * fail fast
@@ -26,7 +30,7 @@ if the build fails for `mvn package` on a developer machine, a developer can inv
 
 for ci/cd it is better to know the error by just looking at the workflow and see which job failed instead of having to inspect logfiles.
 
-this makes it necessary to divide the whole build process up into separate steps. this results in lots of small steps that do particular phase(s) instead of one big step with one goal. 
+this makes it necessary to divide the whole build process up into separate steps. this results in lots of small steps that do particular phase(s) instead of one big build step. 
 
 to understand the ci/cd pipeline design for this template here a refresher on maven:
 
@@ -47,7 +51,7 @@ this project will only utilize the `default` lifecycle which revolves all around
 `Phases` themselves do actually nothing. 
 they serve as hooks where you can "_plug in_" functionality that needs executing during the **lifecycle's phases executions**. 
 this functionality is provided by so-called `Plugins`. 
-`Plugins` are essentially jar files that implement so-called "**Goals**" that contain the actual functionality.
+`Plugins` are essentially jar files that implement so-called `Goals` that contain the actual functionality.
 
 example for `clean` lifecycle:
 
