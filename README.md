@@ -112,32 +112,17 @@ you only call the `check` goal of your formatter plugin. if this fails you can a
 
 ### consequences for pipeline design
 
-* each pipeline job will run the maven goals relevant for the job's purpose. 
-* each pipeline job will assume the previous phases have run in a prior job in the pipeline
+* each pipeline job will run only these maven goals that are relevant for the job's purpose.
+* each pipeline job on github is executed by a different runner/machine
+* each pipeline job needs to pass the resulting job build artifacts to the next jobs in the pipeline.
+* each pipeline job will assume the previous phases have run in a prior job in the pipeline.
 
-this will avoid re-running jobs that already have been done. 
-
-The difference between:
-
-`mvn test`
-
-and
-
-`mvn resources:testResources compiler:testCompile surefire:test`
-
-is that `mvn test` will actually execute this `mvn process-resources compile process-test-resources test-compile test` and will redundantly execute `process-resources` and `compile` **again**, even though the pipeline already executed these in the compile job using this: 
-
-`mvn resources:resources compiler:compile`
-
-on github each job is executed by a different runner/machine.
-
-as a consequence we must propagate build artifacts from one job to the next. 
-this way a `compile` job can _just_ do the compiling and a `packaging` job can _just_ do packaging:
+Example on how build artifacts are passed down the pipeline between jobs:
 * `compile` job produces `.class` files
 * `test` job produces a test report
 * `package` job produces `.jar` file(s)
 * ...
-* `container` job produces container
+* `container` job produces a tagged container
 * ...
 
 TODO/WIP notes begin
