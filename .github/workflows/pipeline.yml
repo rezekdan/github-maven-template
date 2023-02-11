@@ -1,5 +1,5 @@
 name: ci/cd pipeline
-run-name: ${{ github.actor }} triggered ${{ name }} workflow via ${{ github.event_name}} event
+run-name: ${{ github.actor }} triggered ${{ workflow.name }} workflow via ${{ github.event_name}} event
 on: 
   push:
     branches: 
