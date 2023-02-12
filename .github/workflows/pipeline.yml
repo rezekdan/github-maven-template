@@ -30,7 +30,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - run: ./mvnw --version
-      - run: echo ./mvnw -B fmt:check # disabled for now
+      - run: echo ./mvnw -o -B fmt:check # disabled for now
       - run: java -version
   compile:
     needs: check-code-format
@@ -43,7 +43,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
-      - run: ./mvnw -B resources:resources compiler:compile
+      - run: ./mvnw -o -B resources:resources compiler:compile
       - run: ls -lash target
       - uses: actions/upload-artifact@v3
         with:
@@ -70,7 +70,7 @@ jobs:
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ls -lash target
-      - run: ./mvnw -B resources:testResources compiler:testCompile surefire:test
+      - run: ./mvnw -o -B resources:testResources compiler:testCompile surefire:test
       - run: ls -lash target
       - uses: actions/upload-artifact@v3
         with:
@@ -93,7 +93,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
-      - run: ./mvnw -B jar:jar spring-boot:repackage
+      - run: ./mvnw -o -B jar:jar spring-boot:repackage
       - run: ls -lash target
       - uses: actions/upload-artifact@v3
         with:
