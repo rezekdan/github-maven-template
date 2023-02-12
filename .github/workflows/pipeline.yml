@@ -15,7 +15,7 @@ jobs:
           java-version: '17'
           cache: maven
       - run: ./mvnw --version
-      - run: ./mvnw -U dependency:go-offline # warm up maven cache
+      - run: ./mvnw -U -B dependency:go-offline # warm up maven cache
   check-code-format:
     needs: cache-dependencies
     runs-on: ubuntu-latest
@@ -65,7 +65,7 @@ jobs:
           path: target
           retention-days: 1
   package:
-    needs: compile
+    needs: unit-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
