@@ -44,7 +44,6 @@ jobs:
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ./mvnw -o -B resources:resources compiler:compile
-      - run: ls -lash target
       - uses: actions/upload-artifact@v3
         with:
           name: Target
@@ -54,24 +53,18 @@ jobs:
     needs: compile
     runs-on: ubuntu-latest
     steps:
-      - run: ls -lash
       - uses: actions/checkout@v3
-      - run: ls -lash
       - uses: actions/download-artifact@v3
         with:
           name: Target
           path: target
-      - run: ls -lash
-      - run: ls -lash target
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
-      - run: ls -lash target
       - run: ./mvnw -o -B resources:testResources compiler:testCompile surefire:test
-      - run: ls -lash target
       - uses: actions/upload-artifact@v3
         with:
           name: Target
@@ -86,7 +79,6 @@ jobs:
         with:
           name: Target
           path: target
-      - run: ls -lash target
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -94,7 +86,6 @@ jobs:
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ./mvnw -o -B jar:jar spring-boot:repackage
-      - run: ls -lash target
       - uses: actions/upload-artifact@v3
         with:
           name: Target
