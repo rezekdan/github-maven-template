@@ -60,6 +60,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: Target
+          path: target
       - run: ls -lash
       - run: ls -lash target
       - uses: actions/setup-java@v3
@@ -84,6 +85,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: Target
+          path: target
       - run: ls -lash target
       - uses: actions/setup-java@v3
         with:
