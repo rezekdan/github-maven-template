@@ -13,7 +13,7 @@
     <name>hello-world</name>
     <description>Hello World project for Spring Boot</description>
     <properties>
-        <java.version>11</java.version> <!-- TODO: back to 17 as soon as fmt plugin works for 17 -->
+        <java.version>17</java.version>
         <fmt-maven-plugin.version>2.10</fmt-maven-plugin.version>
     </properties>
     <dependencies>
