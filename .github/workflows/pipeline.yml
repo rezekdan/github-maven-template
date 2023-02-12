@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: ./mvnw --version
       - run: ./mvnw fmt:check
       - run: java -version
   compile:
