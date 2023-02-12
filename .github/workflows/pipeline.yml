@@ -10,3 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: ./mvnw fmt:check
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./mvnw compile
