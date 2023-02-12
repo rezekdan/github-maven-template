@@ -88,26 +88,40 @@ jobs:
   publish:
     needs: package
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   build-container:
     needs: publish
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   publish-container:
     needs: build-container
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   # post artifact tests could also be performed after package, not sure yet
   acceptance-test:
     needs: publish-container
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   performance-test:
     needs: publish-container
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   security-test:
     needs: publish-container
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   # deploy on int after or parallel to tests ???
   deploy-int:
     needs: acceptance-test # first draft, after successful acceptance tests
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
   # first draft, deploy to live after all tests
   deploy-live:
     needs: 
@@ -115,4 +129,6 @@ jobs:
       - performance-test
       - security-test
     runs-on: ubuntu-latest
+    steps:
+      - run: echo TODO
 
