@@ -17,7 +17,7 @@ jobs:
           cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ./mvnw --version
-      - run: ./mvnw -U -B dependency:go-offline # warm up maven cache
+      - run: ./mvnw -U -B package -DskipTests dependency:go-offline # warm up maven cache
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
   check-code-format:
     needs: cache-dependencies
