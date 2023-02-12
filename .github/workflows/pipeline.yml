@@ -13,8 +13,9 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
+          cache: maven
       - run: ./mvnw --version
-      - run: echo ./mvnw fmt:check # disabled for now
+      - run: echo ./mvnw -B -U fmt:check # disabled for now
       - run: java -version
   compile:
     needs: check-code-format
@@ -23,6 +24,50 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
+          distribution: 'temurin'
           java-version: '17'
-      - run: ./mvnw compile
+          cache: maven
+      - run: ./mvnw -B -U resources:resources compiler:compile
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Target
+          path: target
+          retention-days: 1
+  unit-test:
+    needs: compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: Target
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: maven
+      - run: ./mvnw -B -U resources:testResources compiler:testCompile surefire:test
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Target
+          path: target
+          retention-days: 1
+  package:
+    needs: compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: Target
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: maven
+      - run: ./mvnw -B -U jar:jar spring-boot:repackage
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Target
+          path: target
+          retention-days: 1
