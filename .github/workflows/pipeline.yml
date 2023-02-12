@@ -14,7 +14,7 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
-          cache: maven
+          cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ./mvnw --version
       - run: ./mvnw -U -B dependency:go-offline # warm up maven cache
@@ -28,7 +28,7 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
-          cache: maven
+          cache: 'maven'
       - run: ./mvnw --version
       - run: echo ./mvnw -B fmt:check # disabled for now
       - run: java -version
@@ -41,7 +41,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: maven
+          cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ./mvnw -B resources:resources compiler:compile
       - run: ls -lash target
@@ -54,16 +54,19 @@ jobs:
     needs: compile
     runs-on: ubuntu-latest
     steps:
+      - run: ls -lash
       - uses: actions/checkout@v3
+      - run: ls -lash
       - uses: actions/download-artifact@v3
         with:
           name: Target
+      - run: ls -lash
       - run: ls -lash target
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: maven
+          cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ls -lash target
       - run: ./mvnw -B resources:testResources compiler:testCompile surefire:test
@@ -86,7 +89,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: maven
+          cache: 'maven'
       - run: find ~/.m2/repository/ -name "*.jar" | wc -l
       - run: ./mvnw -B jar:jar spring-boot:repackage
       - run: ls -lash target
