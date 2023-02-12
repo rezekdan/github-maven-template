@@ -125,6 +125,53 @@ Example on how build artifacts are passed down the pipeline between jobs:
 * `container` job produces a tagged container
 * ...
 
+### supporting tool for designing your custom pipeline
+
+maven has no native "dry-run" mode but there is a nice [maven plugin](https://buildplan.jcgay.fr/) that lists all configured plugins/phases/goals:
+```
+ $ mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ----------------------< com.mycompany.app:my-app >----------------------
+[INFO] Building my-app 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- buildplan:1.5:list (default-cli) @ my-app ---
+[INFO] Build Plan for my-app:
+---------------------------------------------------------------------------------------
+PLUGIN                 | PHASE                  | ID                    | GOAL
+---------------------------------------------------------------------------------------
+maven-resources-plugin | process-resources      | default-resources     | resources
+maven-compiler-plugin  | compile                | default-compile       | compile
+maven-resources-plugin | process-test-resources | default-testResources | testResources
+maven-compiler-plugin  | test-compile           | default-testCompile   | testCompile
+maven-surefire-plugin  | test                   | default-test          | test
+maven-jar-plugin       | package                | default-jar           | jar
+maven-install-plugin   | install                | default-install       | install
+maven-deploy-plugin    | deploy                 | default-deploy        | deploy
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.716 s
+[INFO] Finished at: 2023-02-12T14:52:44+01:00
+[INFO] ------------------------------------------------------------------------
+```
+
+this gives you a nice list as a starting point. 
+
+Alternatively you could use your regular gnu/linux tools to extract this from your regular local build:
+```
+ $ mvn install | grep " --- " | awk -F ' ' '{print $3}' | awk -F ':' 'BEGIN {OFS=":"} {print $1,$3}'
+resources:resources
+compiler:compile
+resources:testResources
+compiler:testCompile
+surefire:test
+jar:jar
+install:install
+```
+
 TODO/WIP notes begin
 
 Jobs:
